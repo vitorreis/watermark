@@ -1,4 +1,4 @@
-package hello;
+package com.vitorreis.watermark;
 
 public class Greeting {
 

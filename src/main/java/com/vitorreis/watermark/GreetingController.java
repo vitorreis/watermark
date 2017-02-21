@@ -1,4 +1,4 @@
-package hello;
+package com.vitorreis.watermark;
 
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.RequestMapping;
