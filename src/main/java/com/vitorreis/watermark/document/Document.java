@@ -6,6 +6,7 @@ package com.vitorreis.watermark.document;
 public class Document {
     private Long id;
     private Author author;
+    private String title;
     private Content content;
     private Topic topic;
     private Watermark watermark;
@@ -24,6 +25,14 @@ public class Document {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Content getContent() {

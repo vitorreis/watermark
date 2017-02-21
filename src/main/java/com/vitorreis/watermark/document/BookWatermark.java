@@ -1,7 +1,5 @@
 package com.vitorreis.watermark.document;
 
-import com.vitorreis.watermark.Watermark;
-
 public class BookWatermark extends Watermark {
     private Topic topic;
 
