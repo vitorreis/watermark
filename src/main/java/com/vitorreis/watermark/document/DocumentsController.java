@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class DocumentsController {
-    private final DocumentsService documentsService = DocumentsService.getInstance();
+    private final DocumentsService documentsService;
+
+    public DocumentsController(DocumentsService documentsService) {
+        this.documentsService = documentsService;
+    }
 
     @RequestMapping(path = "/v1/documents", method = RequestMethod.POST)
     public DocumentResponse newDocument(
