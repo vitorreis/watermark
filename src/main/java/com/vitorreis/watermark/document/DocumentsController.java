@@ -13,14 +13,14 @@ public class DocumentsController {
     }
 
     @RequestMapping(path = "/v1/documents", method = RequestMethod.POST)
-    public DocumentResponse newDocument(
+    public void newDocument(
         @RequestBody Document document,
         HttpServletResponse response
     ) {
         documentsService.save(document);
 
         response.setStatus(HttpServletResponse.SC_ACCEPTED);
-        return new DocumentResponse(document);
+        response.addHeader("Location", "/v1/queue/" + document.getId());
     }
 
     @RequestMapping(path = "/v1/documents/{id}/watermark", method = RequestMethod.GET)
@@ -28,5 +28,18 @@ public class DocumentsController {
         @PathVariable Long id
     ) {
         return documentsService.findById(id).get().getWatermark();
+    }
+
+    @RequestMapping(path = "/v1/queue/{ticketId}", method = RequestMethod.GET)
+    public QueueItem checkQueue(
+        @PathVariable Long ticketId,
+        HttpServletResponse response
+    ) {
+        QueueItem queueItem = new QueueItem(documentsService.findById(ticketId).get());
+        if (queueItem.getStatus() == QueueItem.QueueItemStatus.PROCESSED) {
+            response.addHeader("Location",  "/v1/documents/" + ticketId + "/watermark");
+        }
+
+        return queueItem;
     }
 }
