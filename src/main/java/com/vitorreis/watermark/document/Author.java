@@ -1,6 +1,6 @@
 package com.vitorreis.watermark.document;
 
-public class Author {
+class Author {
     private Long id;
     private String name;
 

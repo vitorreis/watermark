@@ -1,9 +1,6 @@
 package com.vitorreis.watermark.document;
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,5 +21,12 @@ public class DocumentsController {
 
         response.setStatus(HttpServletResponse.SC_ACCEPTED);
         return new DocumentResponse(document);
+    }
+
+    @RequestMapping(path = "/v1/documents/{id}/watermark", method = RequestMethod.GET)
+    public Watermark getWatermark(
+        @PathVariable Long id
+    ) {
+        return documentsService.findById(id).get().getWatermark();
     }
 }

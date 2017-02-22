@@ -3,6 +3,7 @@ package com.vitorreis.watermark.document;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Service
@@ -21,5 +22,9 @@ class DocumentsService {
         document.setId(counter.incrementAndGet());
 
         documents.put(document.getId(), document);
+    }
+
+    Optional<Document> findById(Long id) {
+        return Optional.ofNullable(documents.get(id));
     }
 }
