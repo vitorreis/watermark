@@ -20,7 +20,7 @@ public class DocumentsController {
         documentsService.save(document);
 
         response.setStatus(HttpServletResponse.SC_ACCEPTED);
-        response.addHeader("Location", "/v1/queue/" + document.getId());
+        response.addHeader("Location", "/v1/queue/" + document.getTicketId());
     }
 
     @RequestMapping(path = "/v1/documents/{id}/watermark", method = RequestMethod.GET)

@@ -15,13 +15,13 @@ class DocumentsService {
     private final HashMap<Long, Document> documents = new HashMap<>();
 
     void save(Document document) {
-        if (document.getId() != null && document.getId() != 0L) {
+        if (document.getTicketId() != null && document.getTicketId() != 0L) {
             throw new RuntimeException("Document already exists");
         }
 
-        document.setId(counter.incrementAndGet());
+        document.setTicketId(counter.incrementAndGet());
 
-        documents.put(document.getId(), document);
+        documents.put(document.getTicketId(), document);
     }
 
     Optional<Document> findById(Long id) {

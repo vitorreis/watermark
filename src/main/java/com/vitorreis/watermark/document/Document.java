@@ -4,19 +4,19 @@ package com.vitorreis.watermark.document;
  * A document (books, journals) has a title, author and a watermark property.
  */
 public class Document {
-    private Long id;
+    private Long ticketId;
     private Author author;
     private String title;
     private Content content;
     private Topic topic;
     private Watermark watermark;
 
-    public Long getId() {
-        return id;
+    public Long getTicketId() {
+        return ticketId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setTicketId(Long ticketId) {
+        this.ticketId = ticketId;
     }
 
     public Author getAuthor() {

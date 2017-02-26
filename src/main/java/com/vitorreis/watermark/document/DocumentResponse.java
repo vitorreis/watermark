@@ -4,7 +4,7 @@ class DocumentResponse {
     private final Long id;
 
     public DocumentResponse(Document document) {
-        this.id = document.getId();
+        this.id = document.getTicketId();
     }
 
     public Long getId() {
