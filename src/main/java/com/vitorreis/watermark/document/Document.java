@@ -55,7 +55,7 @@ public class Document {
         return watermark;
     }
 
-    public void setWatermark(Watermark watermark) {
+    void setWatermark(Watermark watermark) {
         this.watermark = watermark;
     }
 }
