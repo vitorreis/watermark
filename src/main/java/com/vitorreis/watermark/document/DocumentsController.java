@@ -2,18 +2,20 @@ package com.vitorreis.watermark.document;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
-public class DocumentsController {
+class DocumentsController {
     private final DocumentsService documentsService;
 
-    public DocumentsController(DocumentsService documentsService) {
+    DocumentsController(DocumentsService documentsService) {
         this.documentsService = documentsService;
     }
 
     @RequestMapping(path = "/v1/documents", method = RequestMethod.POST)
-    public void newDocument(
+    void newDocument(
         @RequestBody Document document,
         HttpServletResponse response
     ) {
@@ -23,23 +25,37 @@ public class DocumentsController {
         response.addHeader("Location", "/v1/queue/" + document.getTicketId());
     }
 
-    @RequestMapping(path = "/v1/documents/{id}/watermark", method = RequestMethod.GET)
-    public Watermark getWatermark(
-        @PathVariable Long id
-    ) {
-        return documentsService.findById(id).get().getWatermark();
-    }
-
-    @RequestMapping(path = "/v1/queue/{ticketId}", method = RequestMethod.GET)
-    public QueueItem checkQueue(
+    @RequestMapping(path = "/v1/documents/{ticketId}/watermark", method = RequestMethod.GET)
+    Watermark getWatermark(
         @PathVariable Long ticketId,
         HttpServletResponse response
     ) {
-        QueueItem queueItem = new QueueItem(documentsService.findById(ticketId).get());
-        if (queueItem.getStatus() == QueueItem.QueueItemStatus.PROCESSED) {
-            response.addHeader("Location",  "/v1/documents/" + ticketId + "/watermark");
-        }
+        Optional<Document> documentOptional = documentsService.findById(ticketId);
 
-        return queueItem;
+        if (documentOptional.isPresent()) {
+            return documentOptional.get().getWatermark();
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return null;
+        }
+    }
+
+    @RequestMapping(path = "/v1/queue/{ticketId}", method = RequestMethod.GET)
+    QueueItem checkQueue(
+        @PathVariable Long ticketId,
+        HttpServletResponse response
+    ) {
+        Optional<Document> documentOptional = documentsService.findById(ticketId);
+        if (documentOptional.isPresent()) {
+            QueueItem queueItem = new QueueItem(documentOptional.get());
+            if (queueItem.getStatus() == QueueItem.QueueItemStatus.PROCESSED) {
+                response.addHeader("Location",  "/v1/documents/" + ticketId + "/watermark");
+            }
+
+            return queueItem;
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return null;
+        }
     }
 }

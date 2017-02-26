@@ -1,6 +1,6 @@
 package com.vitorreis.watermark.document;
 
-public enum Topic {
+enum Topic {
     SCIENCE,
     BUSINESS
 }

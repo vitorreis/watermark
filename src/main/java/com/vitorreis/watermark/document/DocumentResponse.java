@@ -1,6 +1,6 @@
 package com.vitorreis.watermark.document;
 
-class DocumentResponse {
+public class DocumentResponse {
     private final Long id;
 
     public DocumentResponse(Document document) {

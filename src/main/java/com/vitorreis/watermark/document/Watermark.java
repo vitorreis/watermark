@@ -4,12 +4,12 @@ abstract class Watermark {
     private final String title;
     private final String author;
 
-    public Watermark(String title, String author) {
+    Watermark(String title, String author) {
         this.title = title;
         this.author = author;
     }
 
-    public abstract Content getContent();
+    abstract Content getContent();
 
     public String getTitle() {
         return title;

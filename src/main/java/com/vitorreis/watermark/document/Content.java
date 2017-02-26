@@ -1,6 +1,6 @@
 package com.vitorreis.watermark.document;
 
-enum Content {
+public enum Content {
     BOOK,
     JOURNAL
 }

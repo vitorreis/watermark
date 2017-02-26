@@ -1,6 +1,6 @@
 package com.vitorreis.watermark.document;
 
-public class QueueItem {
+class QueueItem {
     enum QueueItemStatus {
         IN_PROCESSING,
         PROCESSED

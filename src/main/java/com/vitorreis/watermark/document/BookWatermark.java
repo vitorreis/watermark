@@ -1,6 +1,6 @@
 package com.vitorreis.watermark.document;
 
-class BookWatermark extends Watermark {
+public class BookWatermark extends Watermark {
     private final Topic topic;
 
     public BookWatermark(String title, String author, Topic topic) {
