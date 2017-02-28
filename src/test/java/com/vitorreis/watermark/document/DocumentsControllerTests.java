@@ -26,9 +26,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -59,6 +61,28 @@ public class DocumentsControllerTests {
             .andDo(print())
             .andExpect(status().isAccepted())
             .andExpect(header().string("Location", containsString("/v1/queue/")));
+    }
+
+    @Test
+    public void itShouldCheckStatusOfTicketInQueue() throws Exception {
+        this.mockMvc.perform(get("/v1/queue/1"))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.status").value("IN_PROCESSING"));
+    }
+
+    @Test
+    public void itShouldReturnNotFoundIfTicketDoesNotExist() throws Exception {
+        this.mockMvc.perform(get("/v1/queue/9999"))
+            .andDo(print())
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void itShouldReturnNotFoundIfWatermarkHaveNotBeingCreatedYet() throws Exception {
+        this.mockMvc.perform(get("/v1/document/1/watermark"))
+            .andDo(print())
+            .andExpect(status().isNotFound());
     }
 
 }
