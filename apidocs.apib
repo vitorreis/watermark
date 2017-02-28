@@ -1,0 +1,74 @@
+FORMAT: 1A
+HOST: tbd
+
+# Watermark API
+The Watermark REST API allows you to create watermarks for documents.
+
+# Group Documents
+This section groups document resources
+
+## Documents Collection [/v1/documents]
+A document is one of the central objects utilized by watermark API.
+
+### Submit document [POST]
+Submit a new document to have it's watermark created.
+
++ Request (application/json)
++ Attributes (DocumentRequest)
+
++ Response 202 (application/json)
+    + Headers
+
+            Location: /v1/queue/1
+
+## Queue Item [/v1/queue/{ticketId}]
+You can follow up the process of watermark creation in the endpoint.
+
+### Ticket status [GET]
+Check the status of a ticket
+
++ Parameters
+    + ticketId: 1 (string) - The ticket id for a document in queue
+
++ Response 200 (application/json)
+    + Headers
+
+            Location: /v1/document/1/watermark
+
+    + Body
+
+            { "status": "PROCESSED" }
+
++ Response 404 (application/json)
+
+## Document Watermark [/v1/document/{ticketId}/watermark]
+Get the watermark of a document
+
+### Get [GET]
+
++ Parameters
+    + ticketId: 1 (string) - The ticket id for a document in queue
+
++ Response 200 (application/json)
+    + Body
+
+            {
+              "title": "My Book book",
+              "author": "Vitor",
+              "topic": "SCIENCE",
+              "content": "BOOK"
+            }
+
++ Response 404 (application/json)
+
+# Data Structures
+
+## DocumentRequest
++ author (Author, required)
++ title: The universe in a nutshell (string, required)
++ topic: SCIENCE (string) - SCIENCE, BUSINESS - Mandatory for book
++ content: BOOK (string, required) - BOOK, JOURNAL
+
+## Author
++ id: 100 (number, required)
++ name: Stephen Hawking (string, required)
